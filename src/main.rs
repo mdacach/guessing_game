@@ -23,4 +23,13 @@ fn main() {
 
     println!("You guessed: {}", guess);
     println!("Size (bytes) of input: {}", size_in_bytes);
+
+    use std::cmp::Ordering;
+    // Note that Rust has now inferred that secret_number is meant to be u32 too!
+    // (In order for the compare to be of the same type)
+    match guess.cmp(&secret_number) {
+        Ordering::Less => println!("Too small!"),
+        Ordering::Greater => println!("Too big!"),
+        Ordering::Equal => println!("You win!"),
+    }
 }
