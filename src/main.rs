@@ -7,29 +7,34 @@ fn main() {
 
     println!("The secret number is: {}", secret_number);
 
-    println!("Please input your guess.");
+    loop {
+        println!("Please input your guess.");
 
-    let mut guess = String::new();
+        let mut guess = String::new();
 
-    let size_in_bytes = std::io::stdin()
-        .read_line(&mut guess) // Will *add* the input to `guess`, not overwrite
-        .expect("Failed to read line"); // Panics if there's an error. Similar to `unwrap()`, but with an error message
+        let size_in_bytes = std::io::stdin()
+            .read_line(&mut guess) // Will *add* the input to `guess`, not overwrite
+            .expect("Failed to read line"); // Panics if there's an error. Similar to `unwrap()`, but with an error message
 
-    // Shadowing guess
-    let guess: u32 = guess.trim()
-        .parse()
-        .expect("Please type a number!");
-    // From here on, guess is this new value. Not sure if I like this pattern
+        // Shadowing guess
+        let guess: u32 = guess.trim()
+            .parse()
+            .expect("Please type a number!");
+        // From here on, guess is this new value. Not sure if I like this pattern
 
-    println!("You guessed: {}", guess);
-    println!("Size (bytes) of input: {}", size_in_bytes);
+        println!("You guessed: {}", guess);
+        println!("Size (bytes) of input: {}", size_in_bytes);
 
-    use std::cmp::Ordering;
-    // Note that Rust has now inferred that secret_number is meant to be u32 too!
-    // (In order for the compare to be of the same type)
-    match guess.cmp(&secret_number) {
-        Ordering::Less => println!("Too small!"),
-        Ordering::Greater => println!("Too big!"),
-        Ordering::Equal => println!("You win!"),
+        use std::cmp::Ordering;
+        // Note that Rust has now inferred that secret_number is meant to be u32 too!
+        // (In order for the compare to be of the same type)
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal => {
+                println!("You win!");
+                break;
+            }
+        }
     }
 }
