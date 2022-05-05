@@ -15,6 +15,12 @@ fn main() {
         .read_line(&mut guess) // Will *add* the input to `guess`, not overwrite
         .expect("Failed to read line"); // Panics if there's an error. Similar to `unwrap()`, but with an error message
 
+    // Shadowing guess
+    let guess: u32 = guess.trim()
+        .parse()
+        .expect("Please type a number!");
+    // From here on, guess is this new value. Not sure if I like this pattern
+
     println!("You guessed: {}", guess);
     println!("Size (bytes) of input: {}", size_in_bytes);
 }
